@@ -1,15 +1,18 @@
 import axios from "axios";
-import { Navigate } from "react-router-dom";
 import { useState } from "react";
 import Cookies from "universal-cookie";
+import skeletonTrumpet from "../images/skeletonTrumpet.gif"
+import skully from "../images/skull.gif"
 
 
 function Game () {
     const cookies = new Cookies();
     const cookieData = cookies.get("TOKEN");
-    const [user, setUser] = useState(cookieData.username);
+    const user = useState(cookieData.username);
     const [gameOn, setGameOn] = useState(false);
     const [message, setMessage] = useState("Choose Difficulty:");
+    const [skull, setSkull] = useState(false);
+    const [trumpet, setTrumpet] = useState(false);
     const [currentMode, setCurrentMode] = useState("");
     const [currentQuestion, setCurrentQuestion] = useState("");
     const [allChoices, setAllChoices] = useState([]);
@@ -17,6 +20,8 @@ function Game () {
     const [correctChoice, setCorrectChoice] = useState("");
 
     const getQuestion = async(mode) => {
+        setMessage("");
+        setTrumpet(false)
         axios.get(`https://the-trivia-api.com/api/questions?limit=1&difficulty=${mode}`)
         .then(res => {
            const question = res.data[0].question;
@@ -51,7 +56,10 @@ function Game () {
                     setScore(score + 4);;
                     break;
             }
-            getQuestion(currentMode);
+            setTrumpet(true);
+            setMessage("Correct!");
+            setTimeout(() =>
+                getQuestion(currentMode), 3000);
         } else {
             gameOver(user, score);
         }
@@ -64,6 +72,7 @@ function Game () {
             newScore: score
         });
         setScore(0);
+        setSkull(true);
         setGameOn(false);
         setMessage("Game Over! Play again?");
         setCurrentMode("");
@@ -75,6 +84,7 @@ function Game () {
     const chooseMode = (mode) => {
         setCurrentMode(mode);
         getQuestion(mode);
+        setSkull(false);
         setGameOn(true);
         setMessage("");
     }
@@ -96,9 +106,20 @@ function Game () {
         <p>Current Score: {score}</p>
     </div>
 
+    const Skull = () => <div className="skull">
+        <img src={skully} />
+    </div>
+
+    const Trumpet = () => <div className="trumpet">
+        <img src={skeletonTrumpet} alt="trumpet" />
+    </div>
+
+
     return (
         <div>
             <h2>{message}</h2>
+            {trumpet ? <Trumpet /> : null}
+            {skull ? <Skull /> : null}
             {!gameOn ? <Modes /> : null}
             {gameOn ? <Scoreboard /> : null}
             <div>

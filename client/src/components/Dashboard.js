@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import { logoutUser } from "../actions/authActions";
-
+import mason from "../images/mason.gif"
 
 function Dashboard() {
     const cookies = new Cookies();
@@ -28,7 +28,17 @@ function Dashboard() {
         <div>
             <h1>Hello, {username}!</h1>
                 <div>
-                    <h2>Leaderboard</h2>
+                    <h2>Behold!  The Top Minds Of The Internet!</h2>
+                        <div className="row">
+                                <img src={mason} alt="mason" />
+                                <img src={mason} alt="mason" />
+                                <img src={mason} alt="mason" />
+                                <img src={mason} alt="mason" />
+                                <img src={mason} alt="mason" />
+                                <img src={mason} alt="mason" />
+                                <img src={mason} alt="mason" />
+                                <img src={mason} alt="mason" />
+                        </div>
                     <table  className="leaderboard">
                         <thead>
                             <tr>

@@ -3,6 +3,7 @@ import Cookies from "universal-cookie";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import cauldron from "../../images/couldron.gif"
 
 function Login() {
     const [pwd, setPwd]= useState("");
@@ -41,6 +42,16 @@ function Login() {
     return (
         <div>
             <h1>Welcome To The Ultimate Test Of Your Intelligence!</h1>
+            <div className="row">
+                    <img src={cauldron} />
+                    <img src={cauldron} />
+                    <img src={cauldron} />
+                    <img src={cauldron} />
+                    <img src={cauldron} />
+                    <img src={cauldron} />
+                    <img src={cauldron} />
+                    <img src={cauldron} />
+            </div>
               <div>
               <form onSubmit={submit}>
                 <label for="username">Username:</label>
